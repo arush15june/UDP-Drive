@@ -63,14 +63,14 @@ void setup() {
 
     // Connect to Home WLAN
     if(WiFi.begin(ssid_WIFI, password_WIFI)) InfoStr("WiFi","Connected to Home WiFi");
-    else InfoStr("WiFi", "Home WiFi Not Found")
-
+    else InfoStr("WiFi", "Home WiFi Not Found");
+    
     // Serve a WiFi Access Point̥
     WiFi.softAPConfig(apIP, apIP, netMsk);
     WiFi.softAP(ssid_AP, password_AP);
-    InfoStr("AP", "WiFi AP Initialized")
-    InfoStr("AP", ssid_AP+" "+password_AP);
-    InfoStr("AP", apIP);
+    InfoStr("AP", "WiFi AP Initialized");
+    InfoStr("AP", String(ssid_AP)+" "+String(password_AP));
+    InfoStr("AP", String(apIP));
 
     // Begin UDP Service̥
     Udp.begin(localUdpPort);
@@ -87,7 +87,7 @@ void loop() {
         if(len > 0) {
             incomingPacket[len] = 0;
         }
-        InfoStr("UDP", incomingPacket)̥;
+        InfoStr("UDP", incomingPacket);
 
         switch(incomingPacket[0]) {
             case 'F' :  dd.forward();
@@ -96,22 +96,22 @@ void loop() {
             case 'L' :  dd.left();
                         break;
 
-            case 'B' :  dd.backward()
+            case 'B' :  dd.backward();
                         break;
 
-            case 'R' :  dd.right()
+            case 'R' :  dd.right();
                         break;
 
-            case 'S' :  dd.stop()
+            case 'S' :  dd.stop();
                         break;
 
-            case default :  dd.stop()
-                        break;
+            default :  dd.stop();
+                            break;
                 
         }
 
         Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
-        Udp.write(strcat(replyPacket, incomingPacket[0]))̥;
+        Udp.write(replyPacket);
         Udp.endPacket();
 
 
